@@ -7,10 +7,11 @@
 import axios from "axios";
 import Vue from "vue";
 import { logout, refreshToken } from "./services/auth.service";
-import { parseJWT, jwtExcludes, reqIdExcludes } from "./utils";
+import { parseJWT, getRequestId, jwtExcludes, reqIdExcludes } from "./utils";
 
 
 function responseError(error) {
+  console.log(error);
   const reqUrl = error.config.url;
   const exclude = ["auth/token/refresh/", "auth/login/"]; // CONFIG -- to handle error manually
 
@@ -35,7 +36,7 @@ function responseError(error) {
 }
 
 const instance = axios.create({
-  baseURL: `http://localhost:8000/api/` // CONFIG -- set it to backend api url
+  baseURL: `http://192.168.2.93:8080/api/` // CONFIG -- set it to backend api url
 });
 
 instance.interceptors.request.use(async function(config) {
