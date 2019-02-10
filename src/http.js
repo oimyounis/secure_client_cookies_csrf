@@ -11,7 +11,6 @@ import { parseJWT, getRequestId, jwtExcludes, reqIdExcludes } from "./utils";
 
 
 function responseError(error) {
-  console.log(error);
   const reqUrl = error.config.url;
   const exclude = ["auth/token/refresh/", "auth/login/"]; // CONFIG -- to handle error manually
 
