@@ -1,4 +1,4 @@
-# secure_client
+# demo_crud
 
 ## Project setup
 ```
