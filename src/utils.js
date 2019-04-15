@@ -5,7 +5,7 @@
 
 import store from "./store";
 
-const chars = ["B", "$", "_", "=", "O", "8", "-", "0", "x", "."]; // CONFIG -- probably will not require changes
+const chars = Array.from('b4$09w)kW*'); // CONFIG -- probably will not require changes
 export const reqIdExcludes = ["lookup/addr"]; // CONFIG -- urls that require reqid check bypass
 export const jwtExcludes = ["auth/token/refresh/", "auth/login/"]; // CONFIG -- urls that require jwt bypass
 

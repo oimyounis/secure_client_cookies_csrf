@@ -13,8 +13,8 @@ Vue.config.productionTip = false;
 Vue.use(VueLocalStorage);
 Vue.prototype.$http = http;
 
-// store.dispatch('lookupAddr'); // Do not remove this line
-// store.dispatch('auth/checkLogin'); // Do not remove this line
+store.dispatch('lookupAddr'); // Do not remove this line
+store.dispatch('auth/checkLogin'); // Do not remove this line
 
 new Vue({
   router,

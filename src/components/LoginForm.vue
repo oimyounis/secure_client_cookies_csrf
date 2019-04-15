@@ -33,7 +33,7 @@
             this.$router.replace('/');
           })
           .catch(error => {
-            this.$store.commit('auth/loginFail', error.response.data.message);
+            this.$store.commit('auth/logout', error.response.data.message);
           });
       }
     },

@@ -35,7 +35,7 @@ function responseError(error) {
 }
 
 const instance = axios.create({
-  baseURL: `http://192.168.2.93:8080/api/` // CONFIG -- set it to backend api url
+  baseURL: `http://localhost:8000/api/` // CONFIG -- set it to backend api url
 });
 
 instance.interceptors.request.use(async function(config) {
