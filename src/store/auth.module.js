@@ -3,7 +3,7 @@
 */
 
 import Vue from "vue";
-import {parseJWT} from "../utils";
+import {parseJWT, getCookie, deleteCookie} from "../utils";
 import {refreshToken, logout} from "../services/auth.service";
 
 export const auth = {
@@ -11,11 +11,12 @@ export const auth = {
   state: {
     loggedIn: false,
     loginErrorMsg: null,
-    tokenExp: null
+    tokenExp: null,
+    timer: null
   },
   mutations: {
     loginSuccess(state) {
-      let tok = Vue.localStorage.get('token');
+      const tok = getCookie('jwt_auth_token');
       if (tok) {
         state.loginErrorMsg = null;
 
@@ -26,7 +27,7 @@ export const auth = {
       }
     },
     logout(state, error = null) {
-      Vue.localStorage.remove('token');
+      deleteCookie('jwt_auth_token');
       state.loggedIn = false;
       state.tokenExp = null;
       // console.log('auth/login/error', error);
@@ -34,11 +35,21 @@ export const auth = {
     },
     checkTokenFail(state, error) {
       logout(null, error);
+    },
+    clearTimer(state) {
+      if (state.timer) {
+        clearTimeout(state.timer);
+        state.timer = null;
+      }
+    },
+    setTimer(state, timer) {
+      state.timer = timer;
     }
   },
   actions: {
     checkLogin({commit}) {
-      let tok = Vue.localStorage.get('token');
+      // let tok = Vue.localStorage.get('token');
+      const tok = getCookie('jwt_auth_token');
       if (tok){
         commit('loginSuccess', parseJWT(tok).exp);
       }
@@ -46,17 +57,17 @@ export const auth = {
     tokenCheck({commit, state}){
       let time = parseInt(Date.now() / 1000);
       let afterSecs = state.tokenExp - time - 5;
-      // console.log('afterSecs', afterSecs);
+      console.log('afterSecs', afterSecs);
 
       if (afterSecs >= 0) {
-        // console.log('tokenCheck set in store');
-        setTimeout(function(){
-          // console.log('will update token');
+        commit('clearTimer');
+        commit('setTimer', setTimeout(function(){
+          console.log('will update token');
           refreshToken();
-        }, afterSecs * 1000);
+        }, afterSecs * 1000));
       }
       else {
-        commit('checkTokenFail', 'Your session has expired. Please login again.');
+        refreshToken();
       }
     }
   }

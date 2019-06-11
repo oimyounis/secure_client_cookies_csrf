@@ -1,4 +1,4 @@
-import { getAll } from "../services/users.service";
+import { getAll, getById } from "../services/users.service";
 
 export const users = {
   namespaced: true,

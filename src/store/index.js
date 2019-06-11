@@ -4,13 +4,15 @@ import http from '@/http'
 
 import { users } from './users.module'
 import { auth } from './auth.module'
+import { organizations } from './organizations.module'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     users,
-    auth
+    auth,
+    organizations
   },
   state: {
     addr: null

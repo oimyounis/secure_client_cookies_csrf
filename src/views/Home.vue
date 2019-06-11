@@ -8,6 +8,11 @@
             <i :class="{'fa fa-refresh': true, 'fa-spin': usersSyncing}"></i>
         </button>
       </div>
+      <form action="">
+        <input type="text" name="username">
+        <span class="error" v-if="$store.state.organizations.errors.username">{{$store.state.organizations.errors.username[0]}}</span>
+      </form>
+
       <table class="table table-dark">
         <thead>
         <tr>
@@ -17,7 +22,7 @@
         </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, index) in $store.state.users.items" :key="user.id">
+          <tr v-for="(user, index) in $store.state.users.items" :key="index">
             <th scope="row">{{index + 1}}</th>
             <td>{{user.name}}</td>
             <td>{{user.age}}</td>
@@ -29,11 +34,24 @@
 </template>
 
 <script>
-export default {
+  import {BASEURL} from "../config";
+
+  export default {
   name: 'home',
+  data () {
+    return {
+      base: BASEURL
+    }
+  },
   methods: {
     syncUsers() {
       this.$store.dispatch('users/getAll');
+    },
+    loadOrgs() {
+      this.$store.dispatch('organizations/getAllOrgs');
+    },
+    selectOrg(id) {
+      this.$store.dispatch('organizations/getOrgById', id);
     }
   },
   computed: {
