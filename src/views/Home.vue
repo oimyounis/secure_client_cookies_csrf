@@ -7,6 +7,10 @@
         <button class="btn btn-primary" @click="syncUsers">
             <i :class="{'fa fa-refresh': true, 'fa-spin': usersSyncing}"></i>
         </button>
+
+        <button class="btn btn-success" @click="refreshTok">
+            <i class="fa fa-tick"></i>
+        </button>
       </div>
       <form action="">
         <input type="text" name="username">
@@ -35,6 +39,7 @@
 
 <script>
   import {BASEURL} from "../config";
+  import {refreshToken, logout} from "../services/auth.service";
 
   export default {
   name: 'home',
@@ -52,6 +57,9 @@
     },
     selectOrg(id) {
       this.$store.dispatch('organizations/getOrgById', id);
+    },
+    refreshTok() {
+      refreshToken();
     }
   },
   computed: {

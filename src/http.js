@@ -35,7 +35,7 @@ function responseError(error) {
 }
 
 const instance = axios.create({
-  baseURL: `http://api.auth.com/api/` // CONFIG -- set it to backend api url
+  baseURL: `http://sub1.auth.com/api/` // CONFIG -- set it to backend api url
 });
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -55,7 +55,7 @@ instance.interceptors.request.use(async function(config) {
       const expired = parsed.exp < now;
       const nearExpired = parsed.exp - 5 < now;
 
-      console.log('nearExpired || expired', nearExpired, expired);
+      // console.log('nearExpired || expired', nearExpired, expired);
 
       if (nearExpired || expired) {
         await refreshToken();
@@ -79,7 +79,7 @@ instance.interceptors.response.use(res => res, responseError);
 export default function(appendAuthHeader = true) {
   // const token = Vue.localStorage.get("token");
   const ct = getCookie('csrftoken');
-  console.log('ct', ct);
+  // console.log('ct', ct);
   if (ct) {
     instance.defaults.headers.common["X-CSRFTOKEN"] = ct;
   }
